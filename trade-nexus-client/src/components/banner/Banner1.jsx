@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Banner = () => {
+const Banner1 = () => {
     return (
         <div className="hero bg-base-200 min-h-screen">
   <div className="hero-content flex-col lg:flex-row-reverse">
@@ -21,4 +21,4 @@ const Banner = () => {
     );
 };
 
-export default Banner;
+export default Banner1;
