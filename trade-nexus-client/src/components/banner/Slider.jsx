@@ -27,6 +27,7 @@ export const Slider = () => {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
+        {/* slides here */}
         <SwiperSlide><Banner1></Banner1></SwiperSlide>
         <SwiperSlide><Banner2></Banner2></SwiperSlide>
         <SwiperSlide><Banner3></Banner3></SwiperSlide>
