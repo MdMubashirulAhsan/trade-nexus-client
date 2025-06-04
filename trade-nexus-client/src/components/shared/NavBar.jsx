@@ -8,7 +8,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const { user, logOut } = useContext(AuthContext);
 
-//   const [isDark, setIsDark] = useState(false); // default light
+//   const [isDark, setIsDark] = useState(false); // default 
 
 //   // On mount, apply initial theme based on isDark (false = light)
 //   useEffect(() => {
