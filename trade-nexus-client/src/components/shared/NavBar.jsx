@@ -49,40 +49,52 @@ const NavBar = () => {
   </li>,
   <li key="all">
     <NavLink
-      to="/allPlants"
+      to="/categories"
       className={({ isActive }) =>
-        `hover:text-accent font-medium transition ${
-          isActive ? 'text-accent underline' : 'text-base-content'
+        `hover:text-primary font-medium transition ${
+          isActive ? 'text-primary underline' : 'text-base-content'
         }`
       }
     >
-      All Plants
+      Categories
     </NavLink>
   </li>,
   <li key="add">
     <NavLink
-      to="/addPlant"
+      to="/all-products"
       className={({ isActive }) =>
         `hover:text-accent font-medium transition ${
           isActive ? 'text-accent underline' : 'text-base-content'
         }`
       }
     >
-      Add Plants
+      All Product
     </NavLink>
   </li>,
   <li key="my">
     <NavLink
-      to="/myPlants"
+      to="/add-product"
       className={({ isActive }) =>
         `hover:text-accent font-medium transition ${
           isActive ? 'text-accent underline' : 'text-base-content'
         }`
       }
     >
-      My Plants
+      Add Product
     </NavLink>
   </li>,
+  <li key="my">
+    <NavLink
+      to="/my-product"
+      className={({ isActive }) =>
+        `hover:text-accent font-medium transition ${
+          isActive ? 'text-accent underline' : 'text-base-content'
+        }`
+      }
+    >
+      My Product
+    </NavLink>
+  </li>
 ];
 
 
