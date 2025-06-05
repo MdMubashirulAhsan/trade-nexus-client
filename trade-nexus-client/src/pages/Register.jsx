@@ -92,7 +92,7 @@ const Register = () => {
   return (
     <>
       <Helmet>
-        <title>Register - Trade Nexus</title>
+        <title> Register - Trade Nexus</title>
       </Helmet>
 
       <div className="hero bg-base-200 min-h-screen rounded-3xl">
