@@ -101,9 +101,7 @@ const NavBar = () => {
 
   return (
     <>
-    <Helmet>
-        <title>Home - Trade Nexus</title>
-      </Helmet>
+    
     
     <div className="navbar bg-base-200     shadow-sm px-[5vw]">
   <div className="navbar-start">

@@ -6,7 +6,7 @@ const Footer = () => {
         <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10">
   
   <aside>
-    <img src={logo} alt="" className='avatar w-[10vw]'/>
+    <img src={logo} alt="" className='rounded-full w-[5vw]'/>
     <p>
       Trade Nexus Ltd.
       <br />
