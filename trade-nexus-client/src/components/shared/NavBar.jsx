@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -39,8 +40,8 @@ const NavBar = () => {
     <NavLink
       to="/"
       className={({ isActive }) =>
-        `hover:text-accent font-medium transition ${
-          isActive ? 'text-accent underline' : 'text-base-content'
+        `hover:text-primary font-medium transition ${
+          isActive ? 'text-primary underline' : 'text-base-content'
         }`
       }
     >
@@ -63,8 +64,8 @@ const NavBar = () => {
     <NavLink
       to="/all-products"
       className={({ isActive }) =>
-        `hover:text-accent font-medium transition ${
-          isActive ? 'text-accent underline' : 'text-base-content'
+        `hover:text-primary font-medium transition ${
+          isActive ? 'text-primary underline' : 'text-base-content'
         }`
       }
     >
@@ -75,8 +76,8 @@ const NavBar = () => {
     <NavLink
       to="/add-product"
       className={({ isActive }) =>
-        `hover:text-accent font-medium transition ${
-          isActive ? 'text-accent underline' : 'text-base-content'
+        `hover:text-primary font-medium transition ${
+          isActive ? 'text-primary underline' : 'text-base-content'
         }`
       }
     >
@@ -87,8 +88,8 @@ const NavBar = () => {
     <NavLink
       to="/my-product"
       className={({ isActive }) =>
-        `hover:text-accent font-medium transition ${
-          isActive ? 'text-accent underline' : 'text-base-content'
+        `hover:text-primary font-medium transition ${
+          isActive ? 'text-primary underline' : 'text-base-content'
         }`
       }
     >
@@ -99,6 +100,11 @@ const NavBar = () => {
 
 
   return (
+    <>
+    <Helmet>
+        <title>Home - Trade Nexus</title>
+      </Helmet>
+    
     <div className="navbar bg-base-200     shadow-sm px-[5vw]">
   <div className="navbar-start">
     <div className="dropdown">
@@ -124,7 +130,7 @@ const NavBar = () => {
         {links}
       </ul>
     </div>
-    <h1 className="text-3xl font-bold text-primary hidden sm:block">Plant Care Tracker</h1>
+    <h1 className="text-3xl font-bold text-primary hidden sm:block">Trade Nexus</h1>
   </div>
 
   <div className="navbar-center hidden lg:flex">
@@ -197,13 +203,13 @@ const NavBar = () => {
           </div>
         </div>
         <button onClick={handleLogout} className="btn px-5 py-2 btn-primary">
-          Logout
+          Signout
         </button>
       </>
     ) : (
       <>
-        <Link to="/login">
-          <button className="btn px-5 py-2 btn-primary">Login</button>
+        <Link to="/sign-in">
+          <button className="btn btn-outline btn-primary">Signin</button>
         </Link>
         <Link to="/register">
           <button className="btn px-5 py-2 btn-primary">Register</button>
@@ -212,6 +218,7 @@ const NavBar = () => {
     )}
   </div>
 </div>
+    </>
 
   );
 };
