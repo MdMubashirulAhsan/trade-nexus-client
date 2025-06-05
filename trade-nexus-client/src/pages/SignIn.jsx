@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import Social from "../components/shared/Social";
+import useAuth from "../hooks/useAuth";
 
 const SignIn = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || '/';
 
   const handleLogin = (e) => {
   e.preventDefault();
@@ -41,7 +43,7 @@ const SignIn = () => {
         icon: 'success',
       });
 
-      navigate(location.state?.from?.pathname || '/', { replace: true });
+      navigate(from, { replace: true });
     })
     .catch((error) => {
       Swal.fire({
@@ -103,7 +105,7 @@ const SignIn = () => {
           </button>
         </form>
 
-        <Social></Social>
+        <Social from={from}></Social>
 
         
 

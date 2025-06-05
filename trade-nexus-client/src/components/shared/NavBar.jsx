@@ -1,13 +1,14 @@
 
-import React, { useContext } from "react";
+import React from "react";
 import { Link, NavLink, useNavigate } from "react-router";
-import { AuthContext } from "../../contexts/AuthContext";
+// import { AuthContext } from "../../";
 import Swal from "sweetalert2";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
+import useAuth from "../../hooks/useAuth";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { user, logOut } = useContext(AuthContext);
+  const { user, signOutUser } = useAuth();
 
 //   const [isDark, setIsDark] = useState(false); // default 
 
@@ -26,7 +27,7 @@ const NavBar = () => {
 //   const toggleTheme = () => setIsDark(!isDark);
 
   const handleLogout = () => {
-    logOut()
+    signOutUser()
       .then(() => navigate("/"))
       .catch((error) => Swal.fire({
             icon: "error",
