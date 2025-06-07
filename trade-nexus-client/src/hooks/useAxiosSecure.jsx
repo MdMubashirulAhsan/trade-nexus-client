@@ -3,7 +3,7 @@ import React from 'react';
 import useAuth from '../hooks/useAuth';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://localhost:3333'
+    baseURL: `${import.meta.env.VITE_API_URL}`
 })
 
 const useAxiosSecure = () => {

@@ -1,14 +1,17 @@
 
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 // import { AuthContext } from "../../";
 import Swal from "sweetalert2";
 // import { Helmet } from "react-helmet";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
+import Categories from "../../pages/Categories";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { user, signOutUser } = useAuth();
+  const { user, signOutUser } = useContext(AuthContext);
+  console.log(user)
 
 //   const [isDark, setIsDark] = useState(false); // default 
 
@@ -49,19 +52,10 @@ const NavBar = () => {
       Home
     </NavLink>
   </li>,
-  <li key="all">
-    <NavLink
-      to="/categories"
-      className={({ isActive }) =>
-        `hover:text-primary font-medium transition ${
-          isActive ? 'text-primary underline' : 'text-base-content'
-        }`
-      }
-    >
-      Categories
-    </NavLink>
+  <li key="categories">
+    <Categories></Categories>
   </li>,
-  <li key="add">
+  <li key="allProducts">
     <NavLink
       to="/all-products"
       className={({ isActive }) =>
@@ -73,7 +67,7 @@ const NavBar = () => {
       All Product
     </NavLink>
   </li>,
-  <li key="my">
+  <li key="addProduct">
     <NavLink
       to="/add-product"
       className={({ isActive }) =>
@@ -85,9 +79,9 @@ const NavBar = () => {
       Add Product
     </NavLink>
   </li>,
-  <li key="my">
+  <li key="myProduct">
     <NavLink
-      to="/my-product"
+      to={`/my-product/${user?.email}`}
       className={({ isActive }) =>
         `hover:text-primary font-medium transition ${
           isActive ? 'text-primary underline' : 'text-base-content'

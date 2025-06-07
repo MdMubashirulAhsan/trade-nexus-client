@@ -16,6 +16,7 @@ import Register from "../pages/Register";
 import SignIn from "../pages/SignIn";
 import Update from "../pages/Update";
 import ErrorPage from "../pages/ErrorPage";
+import axios from "axios";
 
 const router = createBrowserRouter([
     {
@@ -25,15 +26,18 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
+                loader: () => axios(`${import.meta.env.VITE_API_URL}/products`),
                 Component: Home
             },
-            {
-                path:'/categories',
-                Component: Categories,
-                // loader: ({params}) => fetch(`https://career-code-server-taupe.vercel.app/jobs/${params.id}`)
-            },
+            // {
+            //     path:'/categories',
+            //     Component: Categories,
+            //     loader: () => axios(`${import.meta.env.VITE_API_URL}/products`)
+            // },
             {
                 path: '/all-products',
+                                loader: () => axios(`${import.meta.env.VITE_API_URL}/products`),
+
                 element: <PrivateRoute><AllProducts></AllProducts></PrivateRoute>
             },
             {
@@ -42,8 +46,9 @@ const router = createBrowserRouter([
             },
 
             {
-                path:'/my-product',
-                element: <PrivateRoute><MyProduct></MyProduct></PrivateRoute>
+                path:'/my-product/:email',
+                element: <PrivateRoute><MyProduct></MyProduct></PrivateRoute>,
+                loader: ({params}) => axios(`${import.meta.env.VITE_API_URL}/my-product/${params.email}`)
             },
             {
                 path: '/cart',
@@ -52,12 +57,12 @@ const router = createBrowserRouter([
             {
                 path: '/details',
                 element: <PrivateRoute><Details></Details></PrivateRoute>,
-                // loader: ({params}) => fetch(`https://career-code-server-taupe.vercel.app/applications/job/${params.job_id}`)
+                loader: () => axios(`${import.meta.env.VITE_API_URL}/products`)
             },
             {
-                path: '/update',
+                path: '/update/:id',
                 element: <PrivateRoute><Update></Update></PrivateRoute>,
-                // loader: ({params}) => fetch(`https://career-code-server-taupe.vercel.app/applications/job/${params.job_id}`)
+                loader: ({params}) => axios(`${import.meta.env.VITE_API_URL}/product/${params.id}`)
             },
             {
                 path: '/register',

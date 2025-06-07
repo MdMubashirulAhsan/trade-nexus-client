@@ -5,7 +5,8 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 const AllProducts = () => {
   const navigate = useNavigate();
   const products = useLoaderData() || [];
-
+  console.log(products.data)
+// const {_id, img, name, brand, category, rating, quantity} = products.data;
     // const now = format(new Date(), "eee, dd MMMM, yyyy || hh.mm.ss a");
 
 
@@ -35,8 +36,8 @@ const AllProducts = () => {
         </tr>
       </thead>
       <tbody>
-        {products.length ? (
-          products.map((product) => (
+        {products.data.length ? (
+          products.data.map((product) => (
             <tr
               key={product._id}
               className="hover:bg-base-200 text-center cursor-pointer"
@@ -45,7 +46,7 @@ const AllProducts = () => {
               <td className="border border-accent px-4 py-2">{product.name}</td>
               <td className="border border-accent px-4 py-2">{product.brand}</td>
               <td className="border border-accent px-4 py-2">{product.category}</td>
-              <td className="border border-accent px-4 py-2">{product.ratings}</td>
+              <td className="border border-accent px-4 py-2">{product.rating}</td>
               <td className="border border-accent px-4 py-2">{product.quantity}</td>
 
               <td className="border border-accent px-4 py-2">

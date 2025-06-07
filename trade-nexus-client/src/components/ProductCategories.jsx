@@ -1,9 +1,10 @@
 import React from 'react';
+import CategoryCard from './CategoryCard';
 
 const ProductCategories = () => {
     return (
         <div>
-            I am product categories.
+            <CategoryCard></CategoryCard>
         </div>
     );
 };
