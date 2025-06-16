@@ -24,7 +24,7 @@ const Details = () => {
   } = data || {};
 
 
-  // sdf
+  
 
   return (
     <>
