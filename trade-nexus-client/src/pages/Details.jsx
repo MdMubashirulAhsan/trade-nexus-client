@@ -24,7 +24,7 @@ const Details = () => {
   } = data || {};
 
 
-  // aslkdfhlakd.lk
+  // aslkdfhlakd
 
   return (
     <>
