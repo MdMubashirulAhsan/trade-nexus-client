@@ -2,7 +2,7 @@
 
 ## 🌐 Live URL
 
-[Visit Trade Nexus] https://trade-nexus-9fee7.web.app
+https://trade-nexus-9fee7.web.app
 
 ## 📖 Project Overview
 
@@ -65,14 +65,10 @@ Designed with scalability and user experience in mind, Trade Nexus enables effic
 ## 🛠️ Getting Started
 
 ```bash
-# Clone the repository
+
 git clone https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-MdMubashirulAhsan/trade-nexus-client.git
 cd trade-nexus-client
 
-# Install dependencies
-npm install
 
-# Start development server
-npm run dev
 
 
