@@ -23,6 +23,9 @@ const Details = () => {
     rating,
   } = data || {};
 
+
+  // aslkdfhlakd.lk
+
   return (
     <>
       <Helmet>
