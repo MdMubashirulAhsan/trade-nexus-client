@@ -1,41 +1,38 @@
 import Swal from "sweetalert2";
 import React, { use } from "react";
 import { Helmet } from "react-helmet";
-// import {useAuth} from '../hooks/useAuth';
-import axios from "axios";
-import { AuthContext } from "../contexts/AuthContext";
 
+import { AuthContext } from "../contexts/AuthContext";
+import axios from "axios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddProduct = () => {
-  // const [loading, setLoading] = useState(false);
   const { user } = use(AuthContext);
+  const axiosSecure = useAxiosSecure();
 
   const handleAddProduct = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    
+
     const newProduct = Object.fromEntries(formData.entries());
     newProduct.email = user?.email;
-    
-    // setLoading(true);
+    newProduct.quantity = parseInt(newProduct.quantity, 10);
 
-    axios
+    axiosSecure
       .post(
-        `${import.meta.env.VITE_API_URL}/products`,
+        `/products`,
 
         newProduct
       )
 
       .then((data) => {
-        // setLoading(false);
         if (data.data.insertedId) {
           Swal.fire({
             title: "Product added successfully!",
             icon: "success",
             draggable: true,
           });
-          // form.reset();
         } else {
           Swal.fire({
             title: "Error adding Product",
@@ -45,7 +42,6 @@ const AddProduct = () => {
         }
       })
       .catch(() => {
-        // setLoading(false);
         Swal.fire({
           title: "Network error",
           icon: "error",
@@ -61,7 +57,7 @@ const AddProduct = () => {
         <meta name="description" content="My page description" />
       </Helmet>
 
-      <div className="bg-base-100 text-base-content p-8 rounded-xl shadow-md max-w-4xl mx-auto my-10">
+      <div className="bg-base-100 text-base-content p-8 rounded-xl shadow-md max-w-xl mx-auto ">
         <div>
           <h1 className="text-primary text-3xl font-bold text-center mb-[3vh]">
             Add Product
@@ -142,13 +138,23 @@ const AddProduct = () => {
               <option value="" disabled>
                 Product Category
               </option>
-                <option value="Electronics & Gadgets">Electronics & Gadgets</option>
-                <option value="Home & Kitchen Appliances">Home & Kitchen Appliances</option>
-                <option value="Fashion & Apparel">Fashion & Apparel</option>
-                <option value="Industrial Machinery & Tools">Industrial Machinery & Tools</option>
-                <option value="Health & Beauty">Health & Beauty</option>
-                <option value="Automotive Parts & Accessories">Automotive Parts & Accessories</option>
-                <option value="Office Supplies & Stationery">Office Supplies & Stationery</option>
+              <option value="Electronics & Gadgets">
+                Electronics & Gadgets
+              </option>
+              <option value="Home & Kitchen Appliances">
+                Home & Kitchen Appliances
+              </option>
+              <option value="Fashion & Apparel">Fashion & Apparel</option>
+              <option value="Industrial Machinery & Tools">
+                Industrial Machinery & Tools
+              </option>
+              <option value="Health & Beauty">Health & Beauty</option>
+              <option value="Automotive Parts & Accessories">
+                Automotive Parts & Accessories
+              </option>
+              <option value="Office Supplies & Stationery">
+                Office Supplies & Stationery
+              </option>
             </select>
           </fieldset>
 
@@ -187,8 +193,9 @@ const AddProduct = () => {
               type="number"
               name="rating"
               min="1"
-              max={5}
+              max="5"
               required
+              autoComplete="off"
               className="input input-bordered w-full"
               placeholder="Enter product rating"
             />

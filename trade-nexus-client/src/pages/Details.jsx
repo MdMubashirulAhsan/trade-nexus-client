@@ -1,66 +1,69 @@
-import React, {  useState } from 'react'
-import { useLoaderData } from 'react-router'
-import { AuthContext } from '../contexts/AuthContext'
-import axios from 'axios'
-import useAuth from '../hooks/useAuth'
+import React from "react";
+import { useLoaderData } from "react-router";
+import DisplayModal from "../components/DisplayModal";
+import useAuth from "../hooks/useAuth";
+import ReactStars from "react-stars";
+import { Helmet } from "react-helmet";
 
 const Details = () => {
   const { user } = useAuth();
 
-  const { data } = useLoaderData()
-  const [coffee, setCoffee] = useState(data)
-  const { name, photo, details, _id, email, quantity,  } = coffee || {}
-//   const [liked, setLiked] = useState(likedBy.includes(user?.email))
-//   const [likeCount, setLikeCount] = useState(likedBy.length)
-  // console.log('is liked?: ', liked)
-  // console.log(likedBy)
-  // console.log(user?.email)
-  // console.log(coffee)
+  const { data } = useLoaderData();
 
-  
+  const {
+    name,
+    img,
+    quantity,
+    sellQuantity,
+    description,
+    brandName,
+    price,
+    category,
+    content,
+    rating,
+  } = data || {};
 
-  // Handle like/dislike
-  
-
-  // handle order
-  const handleBuy = () => {
-    if (user?.email === email) return alert('tomar nijer coffee')
-    const orderInfo = {
-      coffeeId: _id,
-      customerEmail: user?.email,
-    }
-    // save order info in db
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/place-order/${_id}`, orderInfo)
-      .then(data => {
-        console.log(data)
-        setCoffee(prev => {
-          return { ...prev, quantity: prev.quantity - 1 }
-        })
-      })
-  }
   return (
-    <div>
-      <div className='flex flex-col md:flex-row justify-around items-center py-12 gap-12'>
-        <div className='flex-1'>
-          <img className='w-full' src={photo} alt='' />
-        </div>
-        <div className='flex-1'>
-          <p>Name: {name}</p>
-          <p>Details: {details}</p>
-          <p>Quantity: {quantity}</p>
-          {/* <p>Likes: {likeCount}</p> */}
+    <>
+      <Helmet>
+        <title> Product Details - Trade Nexus</title>
+      </Helmet>
 
-          <div className='flex gap-4'>
-            
-            <button onClick={handleBuy} className='btn btn-secondary'>
+      <div className="hero bg-base-100 min-h-screen text-base-content">
+        <div className="hero-content flex-col lg:flex-row">
+          <img src={img} className="max-w-sm rounded-lg shadow-2xl" />
+          <div>
+            <h1 className="text-5xl font-bold">{name}</h1>
+            <p className="py-6">{description}</p>
+            <p className="py-6">{brandName}</p>
+            <div className="badge badge-secondary">{category}</div>
+            <p className="py-6">Price: {price}</p>
+            <p className="py-6">Total Quantity: {quantity}</p>
+            <p className="py-6">Minimum Qunatity to Buy: {sellQuantity}</p>
+            <div className="flex items-center gap-3">
+              <p className="text-base-content">Ratings:</p>
+              <ReactStars
+                count={5}
+                value={rating}
+                edit={false}
+                readOnly
+                size={24}
+                color2={"#ffd700"}
+              />
+            </div>
+            <p className="py-6">{content}</p>
+            <button
+              className="btn btn-primary"
+              onClick={() => document.getElementById("my_modal_1").showModal()}
+            >
               Buy
             </button>
+            <DisplayModal user={user} sellQuantity={sellQuantity} data={data} />{" "}
           </div>
         </div>
       </div>
-    </div>
-  )
-}
+    </>
+  );
+};
 
-export default Details
+export default Details;

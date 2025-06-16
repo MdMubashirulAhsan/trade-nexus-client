@@ -5,121 +5,129 @@ import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import Social from "../components/shared/Social";
 import useAuth from "../hooks/useAuth";
+import axios from "axios";
+import login from "../assets/lotties/login.json";
+import Lottie from "lottie-react";
 
 const SignIn = () => {
-  const { signIn } = useAuth();
+  const { signInUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state || "/";
 
   const handleLogin = (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const email = form.email.value;
-  const password = form.password.value;
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
 
-  signIn(email, password)
-    .then((result) => {
-      const signInInfo = {
-        email,
-        lastSignInTime: result.user?.metadata?.lastSignInTime,
-      };
+    signInUser(email, password)
+      .then((result) => {
+        const signInInfo = {
+          email,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
 
-      // PATCH to update user's last sign-in time in the database
-      fetch('https://plant-care-server-navy.vercel.app/users', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(signInInfo),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log('Updated user info:', data);
+        axios
+          .patch(`${import.meta.env.VITE_API_URL}/users`, signInInfo)
+
+          
+
+        Swal.fire({
+          title: "Login Successful",
+          icon: "success",
         });
 
-      Swal.fire({
-        title: 'Login Successful',
-        icon: 'success',
+        navigate(from);
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: `Login failed: ${error.code}`,
+          icon: "error",
+        });
       });
-
-      navigate(from, { replace: true });
-    })
-    .catch((error) => {
-      Swal.fire({
-        title: `Login failed: ${error.code}`,
-        icon: 'error',
-      });
-    });
-};
-
-
+  };
 
   return (
     <>
-    <Helmet>
-                <title>
-                    Sign In - Trade Nexus
-                </title>
-            </Helmet>
-    <div className="flex justify-center items-center min-h-screen bg-base-200 px-4 rounded-3xl">
-      <div className="w-full max-w-md p-8 space-y-6 bg-gray-300 rounded-xl shadow-2xl">
-        <h2 className="text-center text-3xl font-bold text-white">
-          Signin to Your Account
-        </h2>
+      <Helmet>
+        <title>Sign In - Trade Nexus</title>
+      </Helmet>
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="Enter your email"
-              className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            />
+      <div className="hero bg-base-200 min-h-screen">
+        <div className="hero-content flex-col lg:flex-row-reverse">
+          <Lottie
+            animationData={login}
+            loop
+            autoplay
+            className="w-[40vw] mx-auto h-[40vh]"
+          />
+          <div className="card bg-base-200 w-full max-w-sm border-2 border-accent shrink-0 shadow-2xl text-base-content">
+            <div className="card-body">
+              <h2 className="text-primary text-3xl font-bold text-center mb-[7vh]">
+                Sign In
+              </h2>
+
+              <form onSubmit={handleLogin} className="space-y-5">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="label font-semibold mb-2 block"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="Enter your email"
+                    className="input input-bordered w-full"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="label font-semibold mb-2 block"
+                  >
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    placeholder="Enter your password"
+                    className="input input-bordered w-full"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn btn-primary w-full py-3 text-lg font-semibold disabled:opacity-60"
+                >
+                  Sign In
+                </button>
+              </form>
+
+              <Social from={from}></Social>
+
+              <p className="text-center text-sm text-base-content">
+                Don’t have an account?{" "}
+                <Link
+                  to="/register"
+                  className="font-semibold text-accent hover:underline"
+                >
+                  Register
+                </Link>
+              </p>
+            </div>
           </div>
-
-          <div>
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              placeholder="Enter your password"
-              className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full rounded-md btn btn-primary py-2 font-semibold   transition"
-          >
-            Sign In
-          </button>
-        </form>
-
-        <Social from={from}></Social>
-
-        
-
-        <p className="text-center text-sm text-gray-400">
-          Don’t have an account?{" "}
-          <Link
-            to="/register"
-            className="font-semibold text-green-400 hover:underline"
-          >
-            Register
-          </Link>
-        </p>
+        </div>
       </div>
-    </div>
+
+      
     </>
   );
 };

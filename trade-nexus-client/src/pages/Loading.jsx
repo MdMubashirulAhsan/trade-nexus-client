@@ -1,19 +1,18 @@
-import Lottie from 'lottie-react';
-import React from 'react';
-import loading from '../assets/lotties/loading.json'
+import Lottie from "lottie-react";
+import React from "react";
+import loading from "../assets/lotties/loading.json";
 
 const Loading = () => {
-    return (
-        <div >
-            <Lottie
+  return (
+    <div>
+      <Lottie
         animationData={loading}
         loop
         autoplay
-        className="w-[70vw] mx-auto h-[100vh]" 
+        className="w-[20vw] mx-auto h-[20vh]"
       />
-            
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Loading;

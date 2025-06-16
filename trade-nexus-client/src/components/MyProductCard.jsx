@@ -1,38 +1,34 @@
-import React from 'react';
+import React from "react";
+import ReactStars from "react-stars";
 
-const MyProductCard = ({product}) => {
-    const {img, _id, name, brand, category, price, description, rating} = product;
-    return (
-        <div>
-            <div className='card card-side bg-base-100 shadow-sm border-2'>
+const MyProductCard = ({ myProduct }) => {
+  const { rating, description, category, brandName, price, name, img } =
+    myProduct || {};
+  return (
+    <div className="card  bg-base-100 shadow-sm border-2">
       <figure>
-        <img src={img} alt='Movie' />
+        <img src={img} alt="Movie" />
       </figure>
-      <div className='flex mt-8 w-full justify-around'>
-        <div>
-          <h2 className=''>{name}</h2>
-          <p>Price: {price}</p>
-          <p>Quantity: {brand}</p>
-          <p>Quantity: {category}</p>
-          <p>Quantity: {description}</p>
-          <p>Quantity: {rating}</p>
-
+      <div className="card-body text-base-content">
+        <h2 className="card-title">Product Name: {name}</h2>
+        <p>Price: {price}</p>
+        <p>Brand Name: {brandName}</p>
+        <p>Category: {category}</p>
+        <p>Description: {description}</p>
+        <div className="flex  justify-start space-x-2">
+          <p className="text-base-content">Ratings:</p>
+          <ReactStars
+            count={5}
+            value={rating}
+            edit={false}
+            readOnly
+            size={24}
+            color2={"#ffd700"}
+          />
         </div>
-        {/* <div className='card-actions justify-end'>
-          <div className='join join-vertical space-y-2'>
-            <Link to={`/product/${_id}`}>
-              <button className='btn join-item'>View Details</button>
-            </Link>
-            <Link to={`/updateCoffee/${_id}`}>
-              <button className='btn join-item'>Edit</button>
-            </Link>
-            <button className='btn join-item'>X</button>
-          </div>
-        </div> */}
       </div>
     </div>
-        </div>
-    );
+  );
 };
 
 export default MyProductCard;

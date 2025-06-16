@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-// import { AuthContext } from "../contexts/AuthContext";
 import { Helmet } from "react-helmet";
 import useAuth from "../hooks/useAuth";
+import { updateProfile } from "firebase/auth";
+import Lottie from "lottie-react";
+import register from '../assets/lotties/register.json'
 
 const Register = () => {
   const { createUser } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const [form, setForm] = useState({
-    name: "",
+    displayName: "",
     email: "",
     password: "",
     photoURL: "",
@@ -32,11 +36,11 @@ const Register = () => {
     e.preventDefault();
     setError("");
     const form = e.target;
-        const formData = new FormData(form);
+    const formData = new FormData(form);
 
-        const { email, password, ...restFormData } = Object.fromEntries(formData.entries());
+    const user = Object.fromEntries(formData.entries());
 
-    if (!validatePassword(password)) {
+    if (!validatePassword(user.password)) {
       setError(
         "Password must be at least 6 characters and include uppercase and lowercase letters."
       );
@@ -44,42 +48,15 @@ const Register = () => {
     }
 
     try {
-      await createUser(email, password)
-        // await updateUser(form.name, form.photoURL);
-
-        .then((result) => {
-          console.log(result.user);
-
-          const userProfile = {
-            email,
-            ...restFormData,
-            creationTime: result.user?.metadata?.creationTime,
-            lastSignInTime: result.user?.metadata?.lastSignInTime,
-          };
-
-          // save profile info in the db
-          fetch("https://plant-care-server-navy.vercel.app/users", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(userProfile),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.insertedId) {
-                Swal.fire({
-                  position: "top-end",
-                  icon: "success",
-                  title: "Your account is created.",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            });
-
-          navigate("/");
+      await createUser(user.email, user.password).then((result) => {
+        
+        updateProfile(result.user, {
+          displayName: user.displayName,
+          photoURL: user.photoURL,
         });
+
+        navigate(from, { replace: true });
+      });
     } catch (err) {
       setError(err.message);
       Swal.fire({
@@ -95,66 +72,98 @@ const Register = () => {
       <Helmet>
         <title> Register - Trade Nexus</title>
       </Helmet>
-
-      <div className="hero bg-base-200 min-h-screen rounded-3xl">
-        <div className="hero-content flex-col">
-          <div className="card  w-full max-w-sm bg-gray-300 shadow-2xl">
-            <div className="card-body">
-              <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <input
-                  name="name"
-                  type="text"
-                  placeholder="Full Name"
-                  className="input input-bordered w-full"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  className="input input-bordered w-full"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  name="photoURL"
-                  type="text"
-                  placeholder="Photo URL"
-                  className="input input-bordered w-full"
-                  value={form.photoURL}
-                  onChange={handleChange}
-                />
-                <input
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  className="input input-bordered w-full"
-                  value={form.password}
-                  onChange={handleChange}
-                  required
-                />
-                {error && <p className="text-red-500 text-sm">{error}</p>}
-                <button className="btn btn-primary w-full" type="submit">
-                  Register
-                </button>
-                <p className="text-center text-sm text-gray-400">
-                  Have an account?{" "}
-                  <Link
-                    to="/login"
-                    className="text-green-400 hover:underline font-semibold"
-                  >
-                    Login
-                  </Link>
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
+<div className="hero bg-base-200 min-h-screen">
+  <div className="hero-content flex-col lg:flex-row-reverse">
+    <div>
+        <Lottie
+          animationData={register}
+          loop
+          autoplay
+          className="w-[40vw] mx-auto h-[40vh]"
+        />
       </div>
+    <div className="card bg-base-200 w-full max-w-sm shrink-0 border-2 border-accent shadow-2xl text-base-content">
+      <div className="card-body">
+        <h2 className="text-primary text-3xl font-bold text-center mb-[7vh]">
+          Register
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <input
+            name="displayName"
+            type="text"
+            placeholder="Full Name"
+            className="input input-bordered w-full"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            className="input input-bordered w-full"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="photoURL"
+            type="url"
+            placeholder="Photo URL"
+            className="input input-bordered w-full"
+            value={form.photoURL}
+            onChange={handleChange}
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            className="input input-bordered w-full"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          {error && <p className="text-danger text-sm">{error}</p>}
+          <button
+            className="btn btn-primary w-full py-3 text-lg font-semibold disabled:opacity-60"
+            type="submit"
+          >
+            Register
+          </button>
+          <p className="text-center text-sm text-gray-400">
+            Have an account?{" "}
+            <Link
+              to="/sign-in"
+              className="font-semibold text-accent hover:underline"
+            >
+              Sign In
+            </Link>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+      {/* <div className="flex items-center justify-center">
+
+
+
+        <div className="bg-base-100 text-base-content p-8 rounded-xl shadow-md max-w-md w-[30vw]">
+        
+      </div>
+      
+      </div> */}
     </>
   );
 };

@@ -1,218 +1,260 @@
-
 import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
-// import { AuthContext } from "../../";
 import Swal from "sweetalert2";
-// import { Helmet } from "react-helmet";
-// import useAuth from "../../hooks/useAuth";
-import Categories from "../../pages/Categories";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ShoppingCart } from "lucide-react";
+import ThemeControl from "./ThemeControl";
+import logo from "../../assets/Logo.png";
+import { CiMenuKebab } from "react-icons/ci";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const { user, signOutUser } = useContext(AuthContext);
-  console.log(user)
-
-//   const [isDark, setIsDark] = useState(false); // default 
-
-//   // On mount, apply initial theme based on isDark (false = light)
-//   useEffect(() => {
-//     const theme = isDark ? "dark" : "light";
-//     document.documentElement.setAttribute("data-theme", theme);
-//   }, []); // run once on mount
-
-//   // Update theme when isDark changes
-//   useEffect(() => {
-//     const theme = isDark ? "dark" : "light";
-//     document.documentElement.setAttribute("data-theme", theme);
-//   }, [isDark]);
-
-//   const toggleTheme = () => setIsDark(!isDark);
 
   const handleLogout = () => {
     signOutUser()
       .then(() => navigate("/"))
-      .catch((error) => Swal.fire({
-            icon: "error",
-            title: "Registration Failed",
-            text: error.message,
-          }));
+      .catch((error) =>
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: error.message,
+        })
+      );
   };
 
   const links = [
-  <li key="home">
-    <NavLink
-      to="/"
-      className={({ isActive }) =>
-        `hover:text-primary font-medium transition ${
-          isActive ? 'text-primary underline' : 'text-base-content'
-        }`
-      }
-    >
-      Home
-    </NavLink>
-  </li>,
-  <li key="categories">
-    <Categories></Categories>
-  </li>,
-  <li key="allProducts">
-    <NavLink
-      to="/all-products"
-      className={({ isActive }) =>
-        `hover:text-primary font-medium transition ${
-          isActive ? 'text-primary underline' : 'text-base-content'
-        }`
-      }
-    >
-      All Product
-    </NavLink>
-  </li>,
-  <li key="addProduct">
-    <NavLink
-      to="/add-product"
-      className={({ isActive }) =>
-        `hover:text-primary font-medium transition ${
-          isActive ? 'text-primary underline' : 'text-base-content'
-        }`
-      }
-    >
-      Add Product
-    </NavLink>
-  </li>,
-  <li key="myProduct">
-    <NavLink
-      to={`/my-product/${user?.email}`}
-      className={({ isActive }) =>
-        `hover:text-primary font-medium transition ${
-          isActive ? 'text-primary underline' : 'text-base-content'
-        }`
-      }
-    >
-      My Product
-    </NavLink>
-  </li>
-];
-
+    <li key="home">
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `hover:text-primary font-medium transition ${
+            isActive ? "text-primary underline" : "text-base-content"
+          }`
+        }
+      >
+        Home
+      </NavLink>
+    </li>,
+    <li key="categories">
+      <NavLink
+        to="/categories"
+        className={({ isActive }) =>
+          `hover:text-primary font-medium transition ${
+            isActive ? "text-primary underline" : "text-base-content"
+          }`
+        }
+      >
+        Categories
+      </NavLink>
+    </li>,
+    <li key="allProducts">
+      <NavLink
+        to="/all-products"
+        className={({ isActive }) =>
+          `hover:text-primary font-medium transition ${
+            isActive ? "text-primary underline" : "text-base-content"
+          }`
+        }
+      >
+        All Product
+      </NavLink>
+    </li>,
+    <li key="addProduct">
+      <NavLink
+        to="/add-product"
+        className={({ isActive }) =>
+          `hover:text-primary font-medium transition ${
+            isActive ? "text-primary underline" : "text-base-content"
+          }`
+        }
+      >
+        Add Product
+      </NavLink>
+    </li>,
+    <li key="myProduct">
+      <NavLink
+        to={"/my-product"}
+        className={({ isActive }) =>
+          `hover:text-primary font-medium transition ${
+            isActive ? "text-primary underline" : "text-base-content"
+          }`
+        }
+      >
+        My Product
+      </NavLink>
+    </li>,
+  ];
 
   return (
     <>
-    
-    
-    <div className="navbar bg-base-200     shadow-sm px-[5vw]">
-  <div className="navbar-start">
-    <div className="dropdown">
-      <div tabIndex={0} role="button" className="btn btn-ghost pl-0 lg:hidden text-primary">
-        <svg
-          className="h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4 6h16M4 12h8m-8 6h16"
-          />
-        </svg>
-      </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-200 text-base-content rounded-box z-10 mt-3 w-52 p-2 shadow border border-base-300"
-      >
-        {links}
-      </ul>
-    </div>
-    <h1 className="text-3xl font-bold text-primary hidden sm:block">Trade Nexus</h1>
-  </div>
-
-  <div className="navbar-center hidden lg:flex">
-    <ul className="menu menu-horizontal px-1 text-base-content">{links}</ul>
-  </div>
-
-  <div className="navbar-end flex items-center gap-4">
-    
-    {/* <label className="swap swap-rotate">
-      <input
-        type="checkbox"
-        className="theme-controller"
-        onChange={toggleTheme}
-        checked={isDark}
-      />
-      
-      <svg
-        className="swap-on fill-current w-6 h-6"
-        aria-label="sun"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-      >
-        <g
-          strokeLinejoin="round"
-          strokeLinecap="round"
-          strokeWidth="2"
-          fill="none"
-          stroke="currentColor"
-        >
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-        </g>
-      </svg>
-      
-      <svg
-        className="swap-off fill-current w-6 h-6"
-        aria-label="moon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-      >
-        <g
-          strokeLinejoin="round"
-          strokeLinecap="round"
-          strokeWidth="2"
-          fill="none"
-          stroke="currentColor"
-        >
-          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-        </g>
-      </svg>
-    </label */}
-
-    {user ? (
-      <>
-        <div className="flex items-center gap-2">
-          <div className="relative group cursor-pointer inline-block">
-            <span className="text-sm font-semibold text-base-content hover:text-accent">User</span>
-
-            {/* Popover on hover */}
-            <div className="absolute right-full top-1/2 -translate-y-1/2 mr-2 z-10 hidden group-hover:flex flex-col items-start gap-2 rounded-lg bg-base-200 p-3 shadow-lg border border-base-300 w-56 transition-all duration-200 scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100">
-              <img
-                src={user.photoURL}
-                alt="User"
-                className="w-10 h-10 rounded-full"
-              />
-              <span className="text-sm break-words text-base-content">
-                {user.displayName}
-              </span>
+      <div className="navbar   bg-base-200   text-base-content  shadow-sm px-[5vw] border-b-2 border-base-300">
+        <div className="navbar-start ">
+          <div className="dropdown">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost pl-0 lg:hidden text-primary"
+            >
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-200 text-base-content rounded-box z-10 mt-3 w-52 p-2 shadow border border-base-300"
+            >
+              {links}
+            </ul>
           </div>
+          <Link to="/">
+            <div className="w-13">
+              <img
+              src={logo}
+              alt=""
+              className="rounded-full w-full lg:hidden"
+            />
+            </div>
+          </Link>
+          <Link to="/">
+            <div className="whitespace-normal">
+              <h1 className="text-3xl font-bold text-primary hidden lg:block -ml-10  ">
+              Trade Nexus
+            </h1>
+            </div>
+          </Link>
         </div>
-        <button onClick={handleLogout} className="btn px-5 py-2 btn-primary">
-          Signout
-        </button>
-      </>
-    ) : (
-      <>
-        <Link to="/sign-in">
-          <button className="btn btn-outline btn-primary">Signin</button>
-        </Link>
-        <Link to="/register">
-          <button className="btn px-5 py-2 btn-primary">Register</button>
-        </Link>
-      </>
-    )}
-  </div>
-</div>
-    </>
 
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1 text-base-content">
+            {links}
+          </ul>
+        </div>
+
+        <div className=" navbar-end flex items-center gap-4">
+          <ThemeControl></ThemeControl>
+          <NavLink
+            to="/cart"
+            className={({ isActive }) =>
+              `hover:text-primary font-medium transition ${
+                isActive ? "text-primary underline" : "text-base-content"
+              }`
+            }
+          >
+            <ShoppingCart />
+          </NavLink>
+
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost pr-0 md:hidden text-primary"
+            >
+             <CiMenuKebab size={25} />
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-200 text-base-content rounded-box z-10 mt-3 w-30 p-2 shadow border border-base-300"
+            >
+              {user ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <div className="relative group cursor-pointer inline-block">
+                      {/* <span className="text-sm font-semibold text-base-content hover:text-accent">User</span> */}
+                      <div className="w-10 h-10 shrink-0 mb-2">
+                        <img
+                          src={user.photoURL}
+                          alt="User"
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      </div>
+                      {/* Popover on hover */}
+                      <div className="absolute right-full top-1/2 -translate-y-1/2 mr-2 z-10 hidden group-hover:flex flex-col items-start gap-2 rounded-lg bg-base-200 p-3 shadow-lg border border-base-300 w-56 transition-all duration-200 scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100">
+                        <span className="text-sm break-words text-base-content">
+                          {user.displayName}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="btn px-5 py-2 btn-primary"
+                  >
+                    Signout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col items-end">
+                    <Link to="/sign-in">
+                    <button className="btn btn-outline btn-primary mb-2">
+                      Signin
+                    </button>
+                  </Link>
+                  <Link to="/register">
+                    <button className="btn  btn-primary">Register</button>
+                  </Link>
+                  </div>
+                </>
+              )}
+            </ul>
+          </div>
+
+
+          
+          {user ? (
+            <>
+              <div className=" items-center gap-2 hidden  md:flex
+">
+                <div className="relative group cursor-pointer inline-block">
+                  {/* <span className="text-sm font-semibold text-base-content hover:text-accent">User</span> */}
+                  <div className="w-10 h-10 shrink-0">
+                    <img
+                      src={user.photoURL}
+                      alt="User"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                  {/* Popover on hover */}
+                  <div className="absolute right-full top-1/2 -translate-y-1/2 mr-2 z-10 hidden group-hover:flex flex-col items-start gap-2 rounded-lg bg-base-200 p-3 shadow-lg border border-base-300 w-56 transition-all duration-200 scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100">
+                    <span className="text-sm break-words text-base-content">
+                      {user.displayName}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="btn px-5 py-2 btn-primary hidden  md:flex"
+              >
+                Signout
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="hidden  md:flex">
+                <Link to="/sign-in">
+                <button className="btn btn-outline btn-primary mr-3">Signin</button>
+              </Link>
+              <Link to="/register">
+                <button className="btn  btn-primary">Register</button>
+              </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
