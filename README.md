@@ -8,11 +8,14 @@ https://trade-nexus-9fee7.web.app
 
 **Trade Nexus** is a global B2B wholesale marketplace that connects bulk suppliers (manufacturers, distributors) with retailers, resellers, and institutional buyers. The platform supports multi-category product listings including:
 
-- Electronics  
-- Gadgets  
+- Electronics & Gadgets   
 - Apparel & Fashion  
 - Home Appliances  
-- Industrial Machinery  
+- Industrial Machinery & Tools
+- Health & Beauty
+- Automotive Parts & Accessories
+- Office Supplies & Stationery
+- Home & Kitchen Appliances 
 
 Designed with scalability and user experience in mind, Trade Nexus enables efficient bulk ordering, secure transactions, and streamlined logistics management.
 
@@ -22,11 +25,10 @@ Designed with scalability and user experience in mind, Trade Nexus enables effic
 
 - 🔐 **Secure Authentication** with Firebase
 - 📦 **Multi-category Product Listings**
-- 🛒 **Dynamic Cart & Bulk Ordering**
-- 📈 **Product Ratings and Reviews**
+- 🛒 **Dynamic Cart**
+- 📈 **Product Ratings**
 - 🎨 **Responsive UI** with Tailwind CSS
-- 🔍 **Real-time Search & Filtering**
-- 🚚 **Order Tracking & Logistics Integration**
+- 🔍 **Real-time Filtering**
 - 💬 **Interactive UI Animations** using Framer Motion & Lottie
 - ⭐ **Star Ratings** with React Stars
 - 🌙 **Dark Mode Support**
