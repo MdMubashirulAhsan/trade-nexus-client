@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import Lottie from "lottie-react";
-import register from '../assets/lotties/register.json'
+import register from "../assets/lotties/register.json";
+import axios from "axios";
 
 const Register = () => {
   const { createUser } = useAuth();
@@ -13,52 +15,41 @@ const Register = () => {
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
 
-  const [form, setForm] = useState({
-    displayName: "",
-    email: "",
-    password: "",
-    photoURL: "",
-  });
+  const {
+    register: formRegister,
+    handleSubmit,
 
-  const [error, setError] = useState("");
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const validatePassword = (password) => {
-    const hasUpper = /[A-Z]/.test(password);
-    const hasLower = /[a-z]/.test(password);
-    return hasUpper && hasLower && password.length >= 6;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    const form = e.target;
-    const formData = new FormData(form);
-
-    const user = Object.fromEntries(formData.entries());
-
-    if (!validatePassword(user.password)) {
-      setError(
-        "Password must be at least 6 characters and include uppercase and lowercase letters."
-      );
-      return;
-    }
+  const onSubmit = async (data) => {
+    const { displayName, email, password, photoURL } = data;
 
     try {
-      await createUser(user.email, user.password).then((result) => {
-        
-        updateProfile(result.user, {
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-        });
+      const result = await createUser(email, password);
 
-        navigate(from, { replace: true });
+      await updateProfile(result.user, { displayName, photoURL });
+
+      const newUser = {
+        displayName,
+        email,
+        photoURL,
+        createdAt: new Date().toISOString(),
+      };
+
+      await axios.post(`${import.meta.env.VITE_API_URL}/users`, newUser);
+
+      Swal.fire({
+        icon: "success",
+        title: "Registration Successful",
+        timer: 1500,
+        showConfirmButton: false,
       });
+
+      reset();
+      navigate(from, { replace: true });
     } catch (err) {
-      setError(err.message);
       Swal.fire({
         icon: "error",
         title: "Registration Failed",
@@ -72,98 +63,114 @@ const Register = () => {
       <Helmet>
         <title> Register - Trade Nexus</title>
       </Helmet>
-<div className="hero bg-base-200 min-h-screen">
-  <div className="hero-content flex-col lg:flex-row-reverse">
-    <div>
-        <Lottie
-          animationData={register}
-          loop
-          autoplay
-          className="w-[40vw] mx-auto h-[40vh]"
-        />
+
+      <div className="hero bg-base-200 min-h-screen">
+        <div className="hero-content flex-col lg:flex-row-reverse">
+          <div>
+            <Lottie
+              animationData={register}
+              loop
+              autoplay
+              className="w-[40vw] mx-auto h-[40vh]"
+            />
+          </div>
+
+          <div className="card bg-base-200 w-full max-w-sm shrink-0 border-2 border-accent shadow-2xl text-base-content">
+            <div className="card-body">
+              <h2 className="text-primary text-3xl font-bold text-center mb-[7vh]">
+                Register
+              </h2>
+
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="input input-bordered w-full"
+                  {...formRegister("displayName", {
+                    required: "Full name is required",
+                  })}
+                />
+                {errors.displayName && (
+                  <p className="text-danger text-sm">
+                    {errors.displayName.message}
+                  </p>
+                )}
+
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input input-bordered w-full"
+                  {...formRegister("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: "Invalid email format",
+                    },
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-danger text-sm">{errors.email.message}</p>
+                )}
+
+                <input
+                  type="url"
+                  placeholder="Photo URL"
+                  className="input input-bordered w-full"
+                  {...formRegister("photoURL", {
+                    required: false,
+                    pattern: {
+                      value: /^(ftp|http|https):\/\/[^ "]+$/,
+                      message: "Invalid URL",
+                    },
+                  })}
+                />
+                {errors.photoURL && (
+                  <p className="text-danger text-sm">
+                    {errors.photoURL.message}
+                  </p>
+                )}
+
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="input input-bordered w-full"
+                  {...formRegister("password", {
+                    required: "Password is required",
+                    validate: (value) =>
+                      /[A-Z]/.test(value) &&
+                      /[a-z]/.test(value) &&
+                      value.length >= 6
+                        ? true
+                        : "Password must be at least 6 characters and include uppercase and lowercase letters",
+                  })}
+                />
+                {errors.password && (
+                  <p className="text-danger text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
+
+                <button
+                  className="btn btn-primary w-full py-3 text-lg font-semibold"
+                  type="submit"
+                >
+                  Register
+                </button>
+
+                <p className="text-center text-sm text-gray-400">
+                  Have an account?{" "}
+                  <Link
+                    to="/sign-in"
+                    className="font-semibold text-accent hover:underline"
+                  >
+                    Sign In
+                  </Link>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-    <div className="card bg-base-200 w-full max-w-sm shrink-0 border-2 border-accent shadow-2xl text-base-content">
-      <div className="card-body">
-        <h2 className="text-primary text-3xl font-bold text-center mb-[7vh]">
-          Register
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <input
-            name="displayName"
-            type="text"
-            placeholder="Full Name"
-            className="input input-bordered w-full"
-            value={form.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            className="input input-bordered w-full"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="photoURL"
-            type="url"
-            placeholder="Photo URL"
-            className="input input-bordered w-full"
-            value={form.photoURL}
-            onChange={handleChange}
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            className="input input-bordered w-full"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-          {error && <p className="text-danger text-sm">{error}</p>}
-          <button
-            className="btn btn-primary w-full py-3 text-lg font-semibold disabled:opacity-60"
-            type="submit"
-          >
-            Register
-          </button>
-          <p className="text-center text-sm text-gray-400">
-            Have an account?{" "}
-            <Link
-              to="/sign-in"
-              className="font-semibold text-accent hover:underline"
-            >
-              Sign In
-            </Link>
-          </p>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-      {/* <div className="flex items-center justify-center">
-
-
-
-        <div className="bg-base-100 text-base-content p-8 rounded-xl shadow-md max-w-md w-[30vw]">
-        
-      </div>
-      
-      </div> */}
     </>
   );
 };

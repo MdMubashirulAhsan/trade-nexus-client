@@ -23,9 +23,6 @@ const Details = () => {
     rating,
   } = data || {};
 
-
-  
-
   return (
     <>
       <Helmet>
@@ -34,17 +31,21 @@ const Details = () => {
 
       <div className="hero bg-base-100 min-h-screen text-base-content">
         <div className="hero-content flex-col lg:flex-row">
-          <img src={img} className="max-w-sm rounded-lg shadow-2xl" />
+          <img
+            src={img}
+            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-lg shadow-2xl"
+          />
+
           <div>
             <h1 className="text-5xl font-bold">{name}</h1>
-            <p className="py-6">{description}</p>
-            <p className="py-6">{brandName}</p>
+            <p className="py-6"><span className="font-bold ">Description:</span> {description}</p>
+            <p className="py-6"><span className="font-bold ">Brand Name:</span> {brandName}</p>
             <div className="badge badge-secondary">{category}</div>
-            <p className="py-6">Price: {price}</p>
-            <p className="py-6">Total Quantity: {quantity}</p>
-            <p className="py-6">Minimum Qunatity to Buy: {sellQuantity}</p>
+            <p className="py-6"><span className="font-bold ">Price:</span> {price}</p>
+            <p className="py-6"><span className="font-bold ">Total Quantity:</span> {quantity}</p>
+            <p className="py-6"><span className="font-bold ">Minimum Qunatity to Buy:</span> {sellQuantity}</p>
             <div className="flex items-center gap-3">
-              <p className="text-base-content">Ratings:</p>
+              <p className="text-base-content"><span className="font-bold ">Ratings:</span></p>
               <ReactStars
                 count={5}
                 value={rating}

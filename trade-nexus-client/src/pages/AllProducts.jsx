@@ -79,8 +79,8 @@ const AllProducts = () => {
                       key={product._id}
                       className="hover:bg-base-200 text-center cursor-pointer"
                     >
-                      <td className="border-2 border-base-content px-4 py-2">
-                        <img src={product.img} alt="" className="w-20 h-20" />
+                      <td className="border-2 border-base-content px-4 py-2 text-center">
+                        <img src={product.img} alt="" className="w-20 h-20 mx-auto" />
                       </td>
                       <td className="border-2 border-base-content px-4 py-2">
                         {product.name}
@@ -132,11 +132,11 @@ const AllProducts = () => {
                   <img src={product.img} alt="" />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">Name: {product.name}</h2>
-                  <p>Brand: {product.brandName}</p>
-                  <p>Category: {product.category}</p>
-                  <div className="flex  justify-start space-x-2">
-                    <p className="text-base-content">Ratings:</p>
+                  <h2 className="card-title">{product.name}</h2>
+                  <p><span className="font-bold ">Brand Name:</span>  {product.brandName}</p>
+                  <p className="badge badge-secondary">{product.category}</p>
+                  <div className="flex  justify-start items-center gap-2">
+                    <p className="text-base-content"><span className="font-bold ">Ratings:</span></p>
                     <ReactStars
                       count={5}
                       value={product.rating}
@@ -146,7 +146,7 @@ const AllProducts = () => {
                       color2={"#ffd700"}
                     />
                   </div>{" "}
-                  <p>Main Quantity: {product.quantity}</p>
+                  <p><span className="font-bold ">Main Quantity:</span> {product.quantity}</p>
                   <div className="card-actions justify-end">
                     <button
                       className="btn  btn-primary"

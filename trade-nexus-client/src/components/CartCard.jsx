@@ -56,13 +56,13 @@ const CartCard = ({ cart, setCarts }) => {
 
       <div className="card-body">
         <h2 className="text-base-content card-title">{category}</h2>
-        <p className="text-base-content">Brand Name: {brandName}</p>
+        <p className="text-base-content"><span className="font-bold ">Brand Name:</span> {brandName}</p>
         <p className="text-base-content">
-          Minimum Selling Quantity: {minSellQuantity}
+          <span className="font-bold ">Minimum Selling Quantity:</span> {minSellQuantity}
         </p>
-        <p className="text-base-content">Buying Quantity: {buyQuantity}</p>
-        <p className="text-base-content">Description: {description}</p>
-        <p className="text-base-content">Buying Date: {buyingDate}</p>
+        <p className="text-base-content"><span className="font-bold ">Buying Quantity:</span> {buyQuantity}</p>
+        <p className="text-base-content"><span className="font-bold ">Description:</span> {description}</p>
+        <p className="text-base-content"><span className="font-bold ">Buying Date:</span> {buyingDate}</p>
 
         <div className="card-actions justify-end">
           <button

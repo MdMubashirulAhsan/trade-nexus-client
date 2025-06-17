@@ -12,15 +12,15 @@ const DisplayCard = ({ product }) => {
           <img src={img} alt="Movie" />
         </figure>
         <div className="card-body">
-          <h2 className="text-base-content">Product Name: {name}</h2>
-          <p className="text-base-content">Price: {price}</p>
-          <p className="text-base-content">Brand Name: {brandName}</p>
-          <p className="text-base-content">Category: {category}</p>
-          <p className="text-base-content">Quantity: {quantity}</p>
+          <h2 className="text-3xl font-bold text-base-content">{name}</h2>
+          <p className="text-base-content"><span className="font-bold ">Price:</span> {price}</p>
+          <p className="text-base-content"><span className="font-bold ">Brand Name:</span> {brandName}</p>
+          <p className="text-base-content"><span className="font-bold ">Category:</span> {category}</p>
+          <p className="text-base-content"><span className="font-bold ">Quantity:</span> {quantity}</p>
 
-          <div className="flex  justify-start space-x-2">
+          <div className="flex  justify-start items-center space-x-2">
             <p className="text-base-content">
-            Ratings:</p>
+            <span className="font-bold ">Ratings:</span></p>
             <ReactStars
               count={5}
               value={rating}

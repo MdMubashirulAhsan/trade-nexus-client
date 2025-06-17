@@ -11,42 +11,43 @@ import Lottie from "lottie-react";
 
 const SignIn = () => {
   const { signInUser } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location.state || "/";
+const location = useLocation();
+const navigate = useNavigate();
+const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+const handleLogin = async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const password = form.password.value;
 
-    signInUser(email, password)
-      .then((result) => {
-        const signInInfo = {
-          email,
-          lastSignInTime: result.user?.metadata?.lastSignInTime,
-        };
+  try {
+    const result = await signInUser(email, password);
 
-        axios
-          .patch(`${import.meta.env.VITE_API_URL}/users`, signInInfo)
+    const signInInfo = {
+      email,
+      lastSignInTime: result.user?.metadata?.lastSignInTime,
+    };
 
-          
+    await axios.patch(`${import.meta.env.VITE_API_URL}/users`, signInInfo);
 
-        Swal.fire({
-          title: "Login Successful",
-          icon: "success",
-        });
+    Swal.fire({
+      title: "Sign in Successful",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
 
-        navigate(from);
-      })
-      .catch((error) => {
-        Swal.fire({
-          title: `Login failed: ${error.code}`,
-          icon: "error",
-        });
-      });
-  };
+    navigate(from, { replace: true });
+  } catch (error) {
+    Swal.fire({
+      title: "Login failed",
+      text: error.message || error.code,
+      icon: "error",
+    });
+  }
+};
+
 
   return (
     <>
