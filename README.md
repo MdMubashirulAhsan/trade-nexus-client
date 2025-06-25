@@ -73,40 +73,39 @@ cd trade-nexus-client
 
 Create .env in server/:
 
-env
-Copy
-Edit
+```bash
 PORT=5000
 MONGO_URI=your_mongo_uri
 JWT_SECRET=your_jwt_secret
 Run the backend:
 
-bash
-Copy
-Edit
+
+```bash
 npm run dev
+
+
 🖥️ Frontend Setup
-bash
-Copy
-Edit
+
+```bash
 cd ../client
 npm install
+
+
 Create .env in client/:
 
-env
-Copy
-Edit
-VITE_API_BASE_URL=http://localhost:5000
+
+```bash
+ VITE_API_BASE_URL=http://localhost:5000
 VITE_FIREBASE_API_KEY=your_firebase_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 VITE_FIREBASE_PROJECT_ID=your_project_id
 VITE_FIREBASE_APP_ID=your_app_id
 Run the frontend:
 
-bash
-Copy
-Edit
+
+```bash
 npm run dev
+
 Now visit: http://localhost:5173
 
 
