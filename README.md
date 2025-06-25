@@ -71,27 +71,29 @@ Designed with scalability and user experience in mind, Trade Nexus enables effic
 git clone https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-MdMubashirulAhsan/trade-nexus-client.git
 cd trade-nexus-client
 
-Create .env in server/:
+## Create .env in server/:
 
 ```bash
 PORT=5000
 MONGO_URI=your_mongo_uri
 JWT_SECRET=your_jwt_secret
-Run the backend:
+
+
+## Run the backend:
 
 
 ```bash
 npm run dev
 
 
-🖥️ Frontend Setup
+## 🖥️ Frontend Setup
 
 ```bash
 cd ../client
 npm install
 
 
-Create .env in client/:
+## Create .env in client/:
 
 
 ```bash
@@ -100,13 +102,13 @@ VITE_FIREBASE_API_KEY=your_firebase_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 VITE_FIREBASE_PROJECT_ID=your_project_id
 VITE_FIREBASE_APP_ID=your_app_id
-Run the frontend:
+## Run the frontend:
 
 
 ```bash
 npm run dev
 
-Now visit: http://localhost:5173
+## Now visit: http://localhost:5173
 
 
 
