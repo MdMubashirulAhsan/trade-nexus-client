@@ -2,11 +2,14 @@ import React from "react";
 import { Helmet } from "react-helmet";
 
 const About = () => {
+  //hello i am about.
   return (
     <>
       <Helmet>
         <title> About - Trade Nexus</title>
       </Helmet>
+
+      
 
       <div className="text-base-content bg-base-200">
         <h1 className="text-3xl font-bold mb-4">About Us</h1>

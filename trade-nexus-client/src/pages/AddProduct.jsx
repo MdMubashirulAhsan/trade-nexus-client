@@ -3,7 +3,7 @@ import React, { use } from "react";
 import { Helmet } from "react-helmet";
 
 import { AuthContext } from "../contexts/AuthContext";
-import axios from "axios";
+// import axios from "axios";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddProduct = () => {
@@ -33,6 +33,7 @@ const AddProduct = () => {
             icon: "success",
             draggable: true,
           });
+          form.reset();
         } else {
           Swal.fire({
             title: "Error adding Product",
