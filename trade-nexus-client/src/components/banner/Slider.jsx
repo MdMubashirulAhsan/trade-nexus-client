@@ -15,7 +15,7 @@ import Banner3 from "./Banner3";
 export const Slider = () => {
   return (
     <>
-      <div className="h-[90vh]">
+      <div className="h-[70vh] -ml-[5vw] -mr-[5vw] -mt-[11vh]">
         <Swiper
           cssMode={true}
           navigation={true}

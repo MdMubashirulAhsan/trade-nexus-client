@@ -1,13 +1,13 @@
 import React from "react";
 import { HiAdjustments } from "react-icons/hi";
-
+import { Palette } from 'lucide-react';
 const ThemeControl = () => {
   return (
     <div>
       <div className="dropdown dropdown-center">
-        <div tabIndex={0} role="button" className="btn m-1">
+        <div tabIndex={0} role="button" className="hover:text-primary">
           
-          <HiAdjustments />
+          <Palette />
         </div>
         <ul
           tabIndex={0}

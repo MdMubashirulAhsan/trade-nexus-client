@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import GetOurUpdates from "../components/GetOurUpdates";
 import Categories from "../components/Categories";
 import FAQ from "../components/FAQ";
+import Blog from "../components/Blog";
 
 const Home = () => {
   return (
@@ -12,9 +13,10 @@ const Home = () => {
         <title>Home - Trade Nexus</title>
       </Helmet>
 
-      <div className="-m-[5vw] space-y-10">
+      <div className="">
         <Slider></Slider>
         <Categories></Categories>
+        <Blog></Blog>
         <FAQ></FAQ>
         <GetOurUpdates></GetOurUpdates>
       </div>

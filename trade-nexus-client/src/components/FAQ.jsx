@@ -2,11 +2,11 @@ import React from "react";
 
 const FAQ = () => {
   return (
-    <div className="container flex flex-col flex-wrap content-center justify-center   mx-auto ">
-      <h1 className="text-5xl antialiased font-semibold leading-none text-center text-primary mb-5">
+    <div className="container flex flex-col flex-wrap content-center justify-center    mt-20 bg-base-200 rounded p-5">
+      <h1 className="text-5xl antialiased font-semibold leading-none text-center text-primary mb-10">
         FAQ
       </h1>
-      <div className="join join-vertical bg-base-100 text-base-content w-[90vw]">
+      <div className="join join-vertical bg-base-300 text-base-content ">
         <div className="collapse collapse-arrow join-item border-base-300 border">
           <input type="radio" name="my-accordion-4" defaultChecked />
           <div className="collapse-title font-semibold">

@@ -1,17 +1,12 @@
-// import axios from 'axios'
-// import { use } from 'react'
-// import {  useState } from "react";
-// import { AuthContext } from '../contexts/AuthContext'
-// import OrderCard from './OrderCard'
-import useAuth from "../hooks/useAuth";
-import CartCard from "../components/CartCard";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import useCartApi from "../api/useCartApi";
-import { Suspense, useEffect, useState } from "react";
-import Loading from "./Loading";
 import { getIdToken } from "firebase/auth";
-import noProduct from '../assets/lotties/no product.json'
 import Lottie from "lottie-react";
+
+import useAuth from "../hooks/useAuth";
+import useCartApi from "../api/useCartApi";
+import Loading from "./Loading";
+import noProduct from "../assets/lotties/no product.json";
 
 const Cart = () => {
   const { user, loading } = useAuth();
@@ -22,15 +17,9 @@ const Cart = () => {
     if (loading || !user?.email) return;
 
     getIdToken(user)
-      .then((token) => {
-        return myCartPromise(user?.email, token);
-      })
-      .then((res) => {
-        setCarts(res || []);
-      })
-      .catch((err) => {
-        console.error("Cart fetch error:", err);
-      });
+      .then((token) => myCartPromise(user.email, token))
+      .then((res) => setCarts(res || []))
+      .catch((err) => console.error("Cart fetch error:", err));
   }, [loading, user?.email]);
 
   if (loading) return <Loading />;
@@ -38,26 +27,69 @@ const Cart = () => {
   return (
     <>
       <Helmet>
-        <title> Cart - Trade Nexus</title>
+        <title>Cart - Trade Nexus</title>
       </Helmet>
 
-      <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  bg-base-200">
-          {carts && carts.length > 0 ? (
-            carts.map((cart, index) => (
-              <CartCard key={index} cart={cart} setCarts={setCarts} />
-            ))
-          ) : (
-            <div className="bg-base-200 justify-center min-h-[40vh] text-center text-2xl font-bold">
-              <Lottie
-            animationData={noProduct}
-            loop
-            autoplay
-            className="w-[50vw] mx-auto h-[40vh]"
-          />
-            </div>
-          )}
-        </div>
+      <div className="overflow-x-auto p-4 min-h-[60vh]">
+        {carts.length > 0 ? (
+          <table className="table w-full border-collapse">
+            <thead>
+              <tr className="bg-base-200 text-base-content text-center">
+                <th className="px-4 py-2">Image</th>
+                <th className="px-4 py-2">Product Name</th>
+                <th className="px-4 py-2">Brand</th>
+                <th className="px-4 py-2">Price</th>
+                <th className="px-4 py-2">Quantity</th>
+                <th className="px-4 py-2">Total</th>
+                <th className="px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {carts.map((cart) => (
+                <tr
+                  key={cart._id}
+                  className="hover:bg-base-100 text-center transition text-base-content"
+                >
+                  <td className="px-4 py-2">
+                    <img
+                      src={cart.img}
+                      alt={cart.name}
+                      className="w-16 h-16 object-cover mx-auto rounded"
+                    />
+                  </td>
+                  <td className="px-4 py-2">{cart.name}</td>
+                  <td className="px-4 py-2">{cart.brandName}</td>
+                  <td className="px-4 py-2">${cart.price}</td>
+                  <td className="px-4 py-2">{cart.quantity}</td>
+                  <td className="px-4 py-2">
+                    ${parseFloat(cart.price * cart.quantity).toFixed(2)}
+                  </td>
+                  <td className="px-4 py-2">
+                    <button
+                      className="btn btn-sm btn-error"
+                      onClick={() => {
+                        // implement remove logic here
+                        // optional: update setCarts after deletion
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center text-2xl font-bold text-accent h-[40vh]">
+            <Lottie
+              animationData={noProduct}
+              loop
+              autoplay
+              className="w-[50vw] h-[40vh]"
+            />
+            <p>Your cart is empty.</p>
+          </div>
+        )}
       </div>
     </>
   );

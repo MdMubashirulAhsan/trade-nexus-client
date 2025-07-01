@@ -4,8 +4,9 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ShoppingCart } from "lucide-react";
 import ThemeControl from "./ThemeControl";
-import logo from "../../assets/Logo.png";
+import logo from "../../assets/Logo-removebg-preview.png";
 import { CiMenuKebab } from "react-icons/ci";
+import { Palette } from 'lucide-react';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const NavBar = () => {
       );
   };
 
-  const links = [
+  const links = <>
     <li key="home">
       <NavLink
         to="/"
@@ -35,7 +36,7 @@ const NavBar = () => {
       >
         Home
       </NavLink>
-    </li>,
+    </li>
     <li key="categories">
       <NavLink
         to="/categories"
@@ -47,7 +48,7 @@ const NavBar = () => {
       >
         Categories
       </NavLink>
-    </li>,
+    </li>
     <li key="allProducts">
       <NavLink
         to="/all-products"
@@ -59,7 +60,33 @@ const NavBar = () => {
       >
         All Product
       </NavLink>
-    </li>,
+    </li>
+    <li key="about">
+      <NavLink
+        to="/about"
+        className={({ isActive }) =>
+          `hover:text-primary font-medium transition ${
+            isActive ? "text-primary underline" : "text-base-content"
+          }`
+        }
+      >
+        About
+      </NavLink>
+    </li>
+    <li key="contact">
+      <NavLink
+        to="/contact"
+        className={({ isActive }) =>
+          `hover:text-primary font-medium transition ${
+            isActive ? "text-primary underline" : "text-base-content"
+          }`
+        }
+      >
+        Contact
+      </NavLink>
+    </li>
+    {user && (
+  <>
     <li key="addProduct">
       <NavLink
         to="/add-product"
@@ -71,10 +98,10 @@ const NavBar = () => {
       >
         Add Product
       </NavLink>
-    </li>,
+    </li>
     <li key="myProduct">
       <NavLink
-        to={"/my-product"}
+        to="/my-product"
         className={({ isActive }) =>
           `hover:text-primary font-medium transition ${
             isActive ? "text-primary underline" : "text-base-content"
@@ -83,12 +110,15 @@ const NavBar = () => {
       >
         My Product
       </NavLink>
-    </li>,
-  ];
+    </li>
+  </>
+    )}
+
+  </>
 
   return (
     <>
-      <div className="navbar   bg-base-200   text-base-content  shadow-sm px-[5vw] border-b-2 border-base-300">
+      <div className="navbar sticky top-0 z-50  bg-base-200   text-base-content  shadow-sm px-[5vw] border-b-2 border-base-300">
         <div className="navbar-start ">
           <div className="dropdown">
             <div
@@ -128,7 +158,7 @@ const NavBar = () => {
           </Link>
           <Link to="/">
             <div className="whitespace-normal">
-              <h1 className="text-3xl font-bold text-primary hidden lg:block -ml-10  ">
+              <h1 className="text-3xl font-bold text-primary hidden lg:block -ml-12  ">
               Trade Nexus
             </h1>
             </div>

@@ -75,7 +75,7 @@ const Register = () => {
             />
           </div>
 
-          <div className="card bg-base-200 w-full max-w-sm shrink-0 border-2 border-accent shadow-2xl text-base-content">
+          <div className="card bg-base-200 w-full max-w-md shrink-0  shadow-2xl text-base-content">
             <div className="card-body">
               <h2 className="text-primary text-3xl font-bold text-center mb-[7vh]">
                 Register

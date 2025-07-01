@@ -56,16 +56,18 @@ const handleLogin = async (e) => {
       </Helmet>
 
       <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <Lottie
+        <div className="hero-content flex-col lg:flex-row-reverse justify-center">
+          <div className="dark:hidden">
+            <Lottie
             animationData={login}
             loop
             autoplay
-            className="w-[40vw] mx-auto h-[40vh]"
+            className="w-[40vw] mx-auto h-[40vh]  "
           />
-          <div className="card bg-base-200 w-full max-w-sm border-2 border-accent shrink-0 shadow-2xl text-base-content">
+          </div>
+          <div className="card bg-base-200 w-full max-w-md  shrink-0 shadow-2xl text-base-content">
             <div className="card-body">
-              <h2 className="text-primary text-3xl font-bold text-center mb-[7vh]">
+              <h2 className="text-primary text-4xl font-bold text-center mb-[7vh]">
                 Sign In
               </h2>
 

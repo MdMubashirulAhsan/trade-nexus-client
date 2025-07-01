@@ -43,9 +43,9 @@ const router = createBrowserRouter([
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/products`),
 
         element: (
-          <PrivateRoute>
+          
             <AllProducts></AllProducts>
-          </PrivateRoute>
+          
         ),
       },
       {
